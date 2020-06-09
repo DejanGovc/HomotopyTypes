@@ -1,0 +1,817 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     36107,        809]
+NotebookOptionsPosition[     29942,        727]
+NotebookOutlinePosition[     30283,        742]
+CellTagsIndexPosition[     30240,        739]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{"NOTE", ":", " ", 
+    RowBox[{
+    "Algebraic", " ", "Morse", " ", "Theory", " ", "computations", " ", "are",
+      " ", "based", " ", "on", " ", "the", " ", "Mathematica", " ", 
+     "function", " ", "reduceChCx", " ", "from", " ", "the", " ", "paper", 
+     " ", "\"\<Leon Lampret. Chain complex reduction using steepness \
+matchings. Preprint, available\nat arXiv:1903.00783 [math.AT], 2019.\>\"", 
+     " ", "Before", " ", "using", " ", "this", " ", "function"}]}], ",", " ", 
+   RowBox[{
+   "it", " ", "has", " ", "to", " ", "be", " ", "loaded", " ", "by", " ", 
+    "evaluating", " ", "the", " ", "Mathematica", " ", "code", " ", "from", 
+    " ", "that", " ", 
+    RowBox[{"paper", "."}]}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.797589659535857*^9, 3.797589721846761*^9}, {
+  3.7983665443756995`*^9, 3.7983665516482673`*^9}, {3.7983741680206003`*^9, 
+  3.7983742659228296`*^9}, {3.798374303833512*^9, 3.798374518078015*^9}},
+ CellLabel->
+  "In[124]:=",ExpressionUUID->"121f4006-cefe-4f4a-b3b5-a22c4e9a46ab"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{"NOTE", ":", " ", 
+    RowBox[{"Before", " ", "starting", " ", "this", " ", "computation"}]}], 
+   ",", " ", 
+   RowBox[{
+   "evaluate", " ", "everything", " ", "in", " ", "\"\<Main Functions.nb\>\"",
+     " ", "to", " ", "load", " ", "the", " ", "functions", " ", 
+    RowBox[{"needed", "."}]}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.7983187073283243`*^9, 3.7983187391414623`*^9}, {
+  3.798366574562643*^9, 3.7983665758991933`*^9}},
+ CellLabel->
+  "In[125]:=",ExpressionUUID->"46014867-4760-4553-b7e5-9416f8f2021c"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{
+   "Load", " ", "the", " ", "data", " ", "in", " ", "the", " ", "same", " ", 
+    "way", " ", "as", " ", "in", " ", "\"\<C. Elegans.nb\>\""}], ":"}], " ", 
+  "*)"}]], "Input",
+ CellChangeTimes->{{3.7983184752978687`*^9, 3.7983184956137686`*^9}, {
+   3.7983193995250607`*^9, 3.798319402226897*^9}, {3.7983195832739897`*^9, 
+   3.798319598182872*^9}, 3.798374543288356*^9},
+ CellLabel->
+  "In[126]:=",ExpressionUUID->"6e1f7338-85cd-4c36-b8a9-2b0bb85a4071"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{
+   "celegansdata", ",", "celegansedges", ",", "celegansvertices", ",", 
+    "celegansvertexorder", ",", "celegans"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7983184410182867`*^9, 3.798318456890811*^9}},
+ CellLabel->
+  "In[127]:=",ExpressionUUID->"416ee0fc-5433-45ac-81be-e7dabb153972"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"celegansdata", "=", 
+   RowBox[{
+    RowBox[{"Import", "[", "\"\<NeuronConnect.xls\>\"", "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"celegansedges", "=", 
+   RowBox[{"Union", "@", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"Union", "@@", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"GroupBy", "[", 
+            RowBox[{"celegansdata", ",", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "3", "]"}], "]"}], "&"}]}], "]"}], "[", "#", 
+           "]"}], "&"}], "/@", 
+         RowBox[{"{", 
+          RowBox[{"\"\<S\>\"", ",", "\"\<Sp\>\""}], "}"}]}], ")"}]}], ")"}], 
+     "[", 
+     RowBox[{"[", 
+      RowBox[{"All", ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "2"}], "}"}]}], "]"}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"celegansvertices", "=", 
+   RowBox[{"DeleteDuplicates", "[", 
+    RowBox[{"Join", "@@", 
+     RowBox[{
+      RowBox[{"Select", "[", 
+       RowBox[{"celegansdata", ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"#", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], "\[Equal]", "\"\<S\>\""}], "||", 
+          RowBox[{
+           RowBox[{"#", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], "\[Equal]", "\"\<Sp\>\""}]}], 
+         "&"}]}], "]"}], "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "2"}], "}"}]}], "]"}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"celegansvertexorder", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{"celegansvertices", ",", 
+      RowBox[{"Range", "[", 
+       RowBox[{"0", ",", 
+        RowBox[{
+         RowBox[{"Length", "[", "celegansvertices", "]"}], "-", "1"}]}], 
+       "]"}]}], "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"celegans", "=", 
+   RowBox[{"Sort", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"Reverse", "/@", "celegansedges"}], ")"}], "/.", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "\[Rule]", 
+         RowBox[{"#", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}], "/@", 
+       "celegansvertexorder"}], ")"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7848143683272142`*^9, 3.7848143876097174`*^9}, 
+   3.7848144946476345`*^9, {3.784814796867377*^9, 3.784814805810514*^9}, {
+   3.7848158111210537`*^9, 3.78481581185931*^9}, {3.7982333056410685`*^9, 
+   3.798233307804897*^9}, {3.79823340702116*^9, 3.798233407627261*^9}},
+ CellLabel->
+  "In[129]:=",ExpressionUUID->"3d6fba0b-2377-41fc-8157-4e5ec31810d7"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{
+   "The", " ", "simplex", " ", "counts", " ", "in", " ", "the", " ", "flag", 
+    " ", "tournaplex", " ", "of", " ", "the", " ", 
+    RowBox[{"C", ".", " ", "Elegans"}], " ", "graph", " ", "are", " ", "as", 
+    " ", 
+    RowBox[{"follows", ".", " ", "For"}], " ", "the", " ", "corresponding", 
+    " ", "Betti", " ", "numbers"}], ",", " ", 
+   RowBox[{"see", " ", "\"\<Integral homology for d = 280\>\"", " ", 
+    RowBox[{"below", "."}]}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.787037689694569*^9, 3.787037696951565*^9}, {
+  3.7983766686483545`*^9, 3.798376682666812*^9}, {3.7997585160558133`*^9, 
+  3.799758517462038*^9}},ExpressionUUID->"91de9491-04f1-41c3-9ac8-\
+f8860eb5c0e0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"flagtplx", "[", 
+     RowBox[{"celegans", ",", "i"}], "]"}], "//", "Length"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "0", ",", "7"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7870376743879147`*^9, 3.7870376825213413`*^9}, {
+  3.787037719612955*^9, 3.787037739513487*^9}, {3.787038133461996*^9, 
+  3.7870381337250485`*^9}, {3.787038778818817*^9, 3.7870387822069597`*^9}, {
+  3.787039407764878*^9, 3.787039414183504*^9}, {3.79758984480412*^9, 
+  3.7975898466183634`*^9}, {3.7975908851185493`*^9, 3.797590893244294*^9}},
+ CellLabel->
+  "In[135]:=",ExpressionUUID->"27f9882f-ef73-4516-8546-e523d6b27ff5"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "279", ",", "2194", ",", "4836", ",", "7662", ",", "13110", ",", "20530", 
+   ",", "22504", ",", "11520"}], "}"}]], "Output",
+ CellChangeTimes->{{3.787037720381489*^9, 3.7870377434475636`*^9}, 
+   3.7870381370518365`*^9, 3.7870387860091963`*^9, 3.7870394195126414`*^9, 
+   3.7870429854267826`*^9, 3.797589861927992*^9, 3.7975908675718746`*^9, 
+   3.7975976122945757`*^9, 3.797599402341673*^9, 3.7975994917684145`*^9, 
+   3.7983780939735627`*^9, 3.7983871827078543`*^9},
+ CellLabel->
+  "Out[135]=",ExpressionUUID->"3f05c862-a7cf-4411-a05b-6eecdcd963e5"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+  "The", " ", "following", " ", "local", " ", "directionality", " ", 
+   "weights", " ", "appear", " ", "in", " ", "the", " ", 
+   RowBox[{"complex", "."}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.797598387430468*^9, 3.7975983942030864`*^9}, {
+  3.7983767646626835`*^9, 3.7983767992340407`*^9}},
+ CellLabel->
+  "In[136]:=",ExpressionUUID->"2557d83b-21b6-474e-ae2c-927b4ab61a5e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"locweights", "=", 
+  RowBox[{"Union", "[", 
+   RowBox[{"locdir", "/@", 
+    RowBox[{"fullflagtplx", "[", "celegans", "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.797598499332988*^9, 3.797598500133205*^9}, {
+  3.79759857495319*^9, 3.7975985806797385`*^9}, {3.7983768021543784`*^9, 
+  3.798376809835739*^9}},
+ CellLabel->
+  "In[137]:=",ExpressionUUID->"fe513353-eaf6-429f-b219-b78ab7a87204"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "2", ",", "10", ",", "12", ",", "20", ",", "28", ",", "36", ",", 
+   "44", ",", "46", ",", "52", ",", "54", ",", "60", ",", "62", ",", "70", 
+   ",", "78", ",", "86", ",", "94", ",", "102", ",", "110", ",", "118", ",", 
+   "126", ",", "134", ",", "142", ",", "144", ",", "150", ",", "152", ",", 
+   "158", ",", "160", ",", "166", ",", "168", ",", "174", ",", "176", ",", 
+   "182", ",", "184", ",", "192", ",", "200", ",", "208", ",", "216", ",", 
+   "224", ",", "232", ",", "240", ",", "248", ",", "256", ",", "264", ",", 
+   "272", ",", "280"}], "}"}]], "Output",
+ CellChangeTimes->{3.797598513862206*^9, 3.797598583142739*^9, 
+  3.797599566345731*^9, 3.798378104920898*^9, 3.798387193558341*^9},
+ CellLabel->
+  "Out[137]=",ExpressionUUID->"a0c05258-20d8-4fd5-a7cc-36b4a2a96830"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+    "The", " ", "following", " ", "function", " ", "now", " ", "computes", 
+     " ", "the", " ", "integral", " ", "homology", " ", "of", " ", "the", " ",
+      "d"}], "-", 
+    RowBox[{
+    "th", " ", "stage", " ", "of", " ", "the", " ", "local", " ", 
+     "directionality", " ", "filtration", " ", "for", " ", "the", " ", 
+     RowBox[{"C", ".", " ", "Elegans"}], " ", "flag", " ", 
+     RowBox[{"tournaplex", ".", " ", "Note"}], " ", "that", " ", "the", " ", 
+     "Algebraic", " ", "Morse", " ", "Theory", " ", "based", " ", "reduction",
+      " ", "from", " ", "the", " ", "above"}], "-", 
+    RowBox[{"mentioned", " ", "paper", " ", 
+     RowBox[{"arXiv", ":", 
+      RowBox[{
+       RowBox[{"1903.00783", " ", "[", 
+        RowBox[{"math", ".", "AT"}], "]"}], " ", "is", " ", "used", " ", "50",
+        " ", "times"}]}]}]}], ",", " ", 
+   RowBox[{
+   "which", " ", "is", " ", "an", " ", "arbitrary", " ", "choice", " ", 
+    "that", " ", "works", " ", "well", " ", "enough", " ", "for", " ", "the", 
+    " ", "purpose", " ", "at", " ", 
+    RowBox[{"hand", "."}]}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.7975985664370747`*^9, 3.797598617736737*^9}, {
+  3.7983769486080046`*^9, 3.7983769584342957`*^9}, {3.798376993163782*^9, 
+  3.798377280689012*^9}, {3.8000964170760107`*^9, 
+  3.8000964221364927`*^9}},ExpressionUUID->"70ba00df-3022-483d-b9af-\
+1690e06fde74"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"analyselocfiltration", "[", "d_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"complex", "=", 
+       RowBox[{"locfiltration", "[", 
+        RowBox[{
+         RowBox[{"fullflagtplx", "[", "celegans", "]"}], ",", "d"}], "]"}]}], 
+      ",", "dd", ",", "dims", ",", "bdrs", ",", "k"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"dd", "=", 
+      RowBox[{"tsimpdim", "[", "complex", "]"}]}], ";", 
+     RowBox[{"dims", "=", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"tsimplices", "[", 
+          RowBox[{"complex", ",", "k"}], "]"}], "//", "Length"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"k", ",", "0", ",", "dd"}], "}"}]}], "]"}]}], ";", 
+     RowBox[{"bdrs", "=", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"tsimpboundary", "[", 
+         RowBox[{"complex", ",", "k"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"k", ",", "1", ",", "dd"}], "}"}]}], "]"}]}], ";", 
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{"reduceChCx", "[", 
+        RowBox[{"bdrs", ",", "dims", ",", "\"\<Z\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "1"}], ",", "2"}], "}"}], ",", 
+         RowBox[{"{", "}"}]}], "]"}], ",", "50"}], "]"}], ";", 
+     RowBox[{"Return", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"chcxbetti", "[", 
+         RowBox[{"dims", ",", "bdrs"}], "]"}], ",", 
+        RowBox[{"chcxtorsion", "[", 
+         RowBox[{"dims", ",", "bdrs"}], "]"}]}], "}"}], "]"}]}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.7876702004029775`*^9, 3.7876704388385773`*^9}, {
+  3.7876704853684044`*^9, 3.78767049157724*^9}, {3.787670544145975*^9, 
+  3.7876705457457533`*^9}, {3.787670578964922*^9, 3.7876706086213303`*^9}, {
+  3.7876707143611827`*^9, 3.7876707157312374`*^9}, {3.7975986707543354`*^9, 
+  3.7975986774991264`*^9}, {3.7975987390160627`*^9, 3.7975988199748774`*^9}, {
+  3.797598853712472*^9, 3.797598896076092*^9}, {3.798374622729858*^9, 
+  3.798374638542905*^9}, {3.798399766469776*^9, 
+  3.798399782640353*^9}},ExpressionUUID->"742fff0c-86a5-4aba-95f6-\
+44f4a1fb71b4"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+  "The", " ", "following", " ", "code", " ", "now", " ", "computes", " ", 
+   "the", " ", "integral", " ", "homology", " ", "of", " ", "all", " ", "the",
+    " ", "stages", " ", "in", " ", "the", " ", "local", " ", "directionality",
+    " ", 
+   RowBox[{"filtration", "."}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.798377516294401*^9, 3.798377547097208*^9}},
+ CellLabel->
+  "In[140]:=",ExpressionUUID->"5507caf9-5c62-492b-830e-872a7b37c15b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Do", "[", 
+  RowBox[{
+   RowBox[{"Print", "[", 
+    RowBox[{"\"\<Integral homology for d = \>\"", "<>", 
+     RowBox[{"ToString", "[", "d", "]"}], "<>", "\"\<: \>\"", "<>", 
+     RowBox[{"ToString", "[", 
+      RowBox[{"analyselocfiltration", "[", "d", "]"}], "]"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"d", ",", "locweights"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7975997589767027`*^9, 3.797599769573492*^9}, {
+  3.7983773351410728`*^9, 3.798377335463801*^9}, {3.7983773715399737`*^9, 
+  3.7983774319854116`*^9}, {3.7983781120801306`*^9, 3.7983781139543476`*^9}},
+ CellLabel->
+  "In[141]:=",ExpressionUUID->"58df3417-4779-4f66-8fa9-f02840714a03"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Integral homology for d = 0: {{279}, {{}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.79838722974465*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"c9c5fc89-f5a2-4826-aa97-b0fe029f2dc7"],
+
+Cell[BoxData["\<\"Integral homology for d = 2: {{1, 1423, 23}, {{}, {3}, {}}}\
+\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387233267252*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"41348c9c-4b44-4729-8291-d083f74e8d35"],
+
+Cell[BoxData["\<\"Integral homology for d = 10: {{1, 164, 3084}, {{}, {}, \
+{}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.79838723685471*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"3e2a61b4-bd0e-4b40-8ecb-2093baf8352e"],
+
+Cell[BoxData["\<\"Integral homology for d = 12: {{1, 164, 2200, 267}, {{}, \
+{}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983872410350633`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"cc8df216-b2d2-422b-b4e4-2b03a819c440"],
+
+Cell[BoxData["\<\"Integral homology for d = 20: {{1, 164, 1236, 825, 0}, {{}, \
+{}, {3}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983872516041327`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"fe19ef2f-cb73-409e-af80-d392eae6f781"],
+
+Cell[BoxData["\<\"Integral homology for d = 28: {{1, 164, 261, 3736, 223}, \
+{{}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387256504868*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"e61e38c9-b775-466c-85ee-62f7f1b6b992"],
+
+Cell[BoxData["\<\"Integral homology for d = 36: {{1, 164, 261, 3127, 1173}, \
+{{}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983872833520436`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"f40b0db3-748e-468f-b01e-0cf7ce3b8dae"],
+
+Cell[BoxData["\<\"Integral homology for d = 44: {{1, 164, 261, 1564, 2831}, \
+{{}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387301525173*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"42505ac2-cfe4-4d0a-8bce-a74fa5010e8d"],
+
+Cell[BoxData["\<\"Integral homology for d = 46: {{1, 164, 261, 1564, 2451, \
+15}, {{}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387322161917*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"7d32d2a5-d1b2-476e-a5b3-4429c38ea5e6"],
+
+Cell[BoxData["\<\"Integral homology for d = 52: {{1, 164, 261, 878, 4320, \
+15}, {{}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983873537540736`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"3f5472ac-9c18-436b-ae58-0eaa1f60e432"],
+
+Cell[BoxData["\<\"Integral homology for d = 54: {{1, 164, 261, 878, 3511, \
+131}, {{}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387408257752*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"ea8ce914-14d0-4b88-a14c-09af3392a033"],
+
+Cell[BoxData["\<\"Integral homology for d = 60: {{1, 164, 261, 387, 7469, \
+131}, {{}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983874911187515`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"42d14c0e-3687-4b46-b8e0-5c90d172bbb0"],
+
+Cell[BoxData["\<\"Integral homology for d = 62: {{1, 164, 261, 387, 6227, \
+1050}, {{}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387521293177*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"60740073-406c-4482-8dd7-e18d30ba9b5c"],
+
+Cell[BoxData["\<\"Integral homology for d = 70: {{1, 164, 261, 387, 5476, \
+1682, 0}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387560077322*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"8f8eb8b6-79b0-47c1-94f8-0fad3af5a7bc"],
+
+Cell[BoxData["\<\"Integral homology for d = 78: {{1, 164, 261, 387, 3383, \
+3708, 0}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387724792783*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"22ea275c-bf08-4017-9b65-9914dc8473e3"],
+
+Cell[BoxData["\<\"Integral homology for d = 86: {{1, 164, 261, 387, 2565, \
+5635, 15}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798387855971917*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"b39fbf4f-2dc9-4a87-bf17-1fd46393358e"],
+
+Cell[BoxData["\<\"Integral homology for d = 94: {{1, 164, 261, 387, 1447, \
+7564, 59}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.79838794562422*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"980ec214-ac52-4b2c-b9f4-59d47a6d87d1"],
+
+Cell[BoxData["\<\"Integral homology for d = 102: {{1, 164, 261, 387, 975, \
+8192, 277}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983880806530027`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"12b438a9-8901-46b7-8b91-b63993babd18"],
+
+Cell[BoxData["\<\"Integral homology for d = 110: {{1, 164, 261, 387, 574, \
+9528, 660}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798388109730708*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"338578fb-d6d1-4717-a99a-1aed26dbd449"],
+
+Cell[BoxData["\<\"Integral homology for d = 118: {{1, 164, 261, 387, 574, \
+8069, 1399}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983882263542385`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"79c77c6b-a97c-423d-bde1-8f94ac67c523"],
+
+Cell[BoxData["\<\"Integral homology for d = 126: {{1, 164, 261, 387, 574, \
+6240, 2203}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798388336684618*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"99320b0b-aa2d-4750-be70-42259c8fd42e"],
+
+Cell[BoxData["\<\"Integral homology for d = 134: {{1, 164, 261, 387, 574, \
+4411, 4037}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798388507317708*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"defe9164-b432-4364-95c0-6e8a1b226c4b"],
+
+Cell[BoxData["\<\"Integral homology for d = 142: {{1, 164, 261, 387, 574, \
+3443, 5321}, {{}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983886643077993`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"3865c356-be3c-425e-9972-c5ce5ece1b65"],
+
+Cell[BoxData["\<\"Integral homology for d = 144: {{1, 164, 261, 387, 574, \
+3443, 5317, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798388801980054*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"79615d0d-b451-4001-9065-f7f59045d9b6"],
+
+Cell[BoxData["\<\"Integral homology for d = 150: {{1, 164, 261, 387, 574, \
+2235, 7167, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798388999603609*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"15b38546-10c8-4026-be0d-5e37294d7cea"],
+
+Cell[BoxData["\<\"Integral homology for d = 152: {{1, 164, 261, 387, 574, \
+2235, 7091, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983892831655984`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"ad618481-5b7a-49ed-8f06-076dd81b4dc2"],
+
+Cell[BoxData["\<\"Integral homology for d = 158: {{1, 164, 261, 387, 574, \
+1654, 8384, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983895921015205`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"38a2557b-805e-4a73-b7e9-78c0db7f5398"],
+
+Cell[BoxData["\<\"Integral homology for d = 160: {{1, 164, 261, 387, 574, \
+1654, 8203, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983899382086086`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"052b1573-fd44-4b38-a815-6c067b91353a"],
+
+Cell[BoxData["\<\"Integral homology for d = 166: {{1, 164, 261, 387, 574, \
+1128, 9187, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983900207026253`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"c6f4f2be-e09f-4798-b6ab-c2fe384e6556"],
+
+Cell[BoxData["\<\"Integral homology for d = 168: {{1, 164, 261, 387, 574, \
+1128, 8791, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798390108861189*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"45fcd62f-6e94-4036-a07a-84cbceca35b8"],
+
+Cell[BoxData["\<\"Integral homology for d = 174: {{1, 164, 261, 387, 574, \
+874, 9374, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983901901657505`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"946eac83-2d80-45b9-9cfe-b9fe680cade0"],
+
+Cell[BoxData["\<\"Integral homology for d = 176: {{1, 164, 261, 387, 574, \
+874, 8867, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983902535258937`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"a5c31738-e97b-485b-a26b-0826b3e31cba"],
+
+Cell[BoxData["\<\"Integral homology for d = 182: {{1, 164, 261, 387, 574, \
+734, 9628, 0}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983903352184052`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"7f706882-a466-4b8b-bbb9-ffd0f8f3fa82"],
+
+Cell[BoxData["\<\"Integral homology for d = 184: {{1, 164, 261, 387, 574, \
+734, 8707, 26}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983904165871253`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"0a7a7265-e48b-42a7-8b98-a7b57f6c6ac0"],
+
+Cell[BoxData["\<\"Integral homology for d = 192: {{1, 164, 261, 387, 574, \
+734, 7859, 86}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983906346691246`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"0e144bea-c5cd-4a08-9f3d-7e5f4663a36a"],
+
+Cell[BoxData["\<\"Integral homology for d = 200: {{1, 164, 261, 387, 574, \
+734, 6603, 293}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798390809043313*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"af8f46da-0908-400a-8ef7-f10ebf9f8b41"],
+
+Cell[BoxData["\<\"Integral homology for d = 208: {{1, 164, 261, 387, 574, \
+734, 5649, 540}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798390908051262*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"2a8c171c-37b7-4fe1-887c-9c93c0dedfdc"],
+
+Cell[BoxData["\<\"Integral homology for d = 216: {{1, 164, 261, 387, 574, \
+734, 4784, 952}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798391009335971*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"905a3071-81c5-4fef-a828-00a49c201198"],
+
+Cell[BoxData["\<\"Integral homology for d = 224: {{1, 164, 261, 387, 574, \
+734, 3996, 1171}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798391095759534*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"33a9481e-155a-4ef3-9d26-cb2b5f657a8f"],
+
+Cell[BoxData["\<\"Integral homology for d = 232: {{1, 164, 261, 387, 574, \
+734, 3217, 1610}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798391165762909*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"8337aaab-a86f-4c60-a916-2cfc8d891e30"],
+
+Cell[BoxData["\<\"Integral homology for d = 240: {{1, 164, 261, 387, 574, \
+734, 2800, 1884}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983912439846992`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"fde60be9-d5b8-4472-9858-e6bf09a7f1c2"],
+
+Cell[BoxData["\<\"Integral homology for d = 248: {{1, 164, 261, 387, 574, \
+734, 2454, 2207}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.798391319563553*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"4403dd8d-6fec-4604-8553-71b2569888e2"],
+
+Cell[BoxData["\<\"Integral homology for d = 256: {{1, 164, 261, 387, 574, \
+734, 2241, 2374}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983913885807953`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"009e1641-142d-4329-ad7f-eea372aae157"],
+
+Cell[BoxData["\<\"Integral homology for d = 264: {{1, 164, 261, 387, 574, \
+734, 2074, 2486}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983914531050196`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"8f71cdee-1687-44f6-8878-ea5a27ad1647"],
+
+Cell[BoxData["\<\"Integral homology for d = 272: {{1, 164, 261, 387, 574, \
+734, 1985, 2558}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983915189858065`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"b974244c-b6f0-4c67-802f-51d6cbabd46b"],
+
+Cell[BoxData["\<\"Integral homology for d = 280: {{1, 164, 261, 387, 574, \
+734, 1924, 2652}, {{}, {}, {}, {}, {}, {}, {}, {}}}\"\>"], "Print",
+ CellChangeTimes->{3.7983781460304685`*^9, 3.7983915738729534`*^9},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"eb3865f1-d943-4eb2-9765-1c3d3684706d"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{" ", 
+       RowBox[{"Note", " ", "that", " ", "for", " ", "d", " ", 
+        RowBox[{"in", " ", "[", 
+         RowBox[{"2", ",", "10"}]}]}], ")"}], " ", "there", " ", "is", " ", 
+      "a", " ", 
+      RowBox[{"Z", "/", "3"}], " ", "summand", " ", "in", " ", "H_", "1", " ",
+       "and", " ", "for", " ", "d", " ", 
+      RowBox[{"in", " ", "[", 
+       RowBox[{"20", ",", "28"}]}]}], ")"}], " ", "there", " ", "is", " ", 
+    "a", " ", 
+    RowBox[{"Z", "/", "3"}], " ", "summand", " ", "in", " ", "H_", "2.", " ", 
+    "The", " ", "result", " ", "for", " ", "d"}], " ", "=", " ", 
+   RowBox[{
+   "280", " ", "is", " ", "the", " ", "integral", " ", "homology", " ", "of", 
+    " ", "the", " ", "full", " ", "flag", " ", 
+    RowBox[{"tournaplex", "."}]}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.79837755940795*^9, 3.7983776055631647`*^9}, {
+  3.7983776580787625`*^9, 3.798377697788994*^9}, {3.800096151768642*^9, 
+  3.8000961603042917`*^9}},ExpressionUUID->"c00b2a89-cf1b-40db-a6da-\
+f4debd5ea92c"]
+},
+WindowSize->{938, 656},
+WindowMargins->{{94, Automatic}, {Automatic, 1}},
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (March 6, 2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1081, 20, 86, "Input",ExpressionUUID->"121f4006-cefe-4f4a-b3b5-a22c4e9a46ab"],
+Cell[1642, 42, 582, 13, 48, "Input",ExpressionUUID->"46014867-4760-4553-b7e5-9416f8f2021c"],
+Cell[2227, 57, 512, 11, 28, "Input",ExpressionUUID->"6e1f7338-85cd-4c36-b8a9-2b0bb85a4071"],
+Cell[2742, 70, 485, 12, 48, "Input",ExpressionUUID->"416ee0fc-5433-45ac-81be-e7dabb153972"],
+Cell[3230, 84, 2786, 81, 105, "Input",ExpressionUUID->"3d6fba0b-2377-41fc-8157-4e5ec31810d7"],
+Cell[6019, 167, 749, 15, 48, "Input",ExpressionUUID->"91de9491-04f1-41c3-9ac8-f8860eb5c0e0"],
+Cell[CellGroupData[{
+Cell[6793, 186, 688, 14, 28, "Input",ExpressionUUID->"27f9882f-ef73-4516-8546-e523d6b27ff5"],
+Cell[7484, 202, 594, 11, 32, "Output",ExpressionUUID->"3f05c862-a7cf-4411-a05b-6eecdcd963e5"]
+}, Open  ]],
+Cell[8093, 216, 431, 9, 28, "Input",ExpressionUUID->"2557d83b-21b6-474e-ae2c-927b4ab61a5e"],
+Cell[CellGroupData[{
+Cell[8549, 229, 418, 9, 28, "Input",ExpressionUUID->"fe513353-eaf6-429f-b219-b78ab7a87204"],
+Cell[8970, 240, 833, 14, 52, "Output",ExpressionUUID->"a0c05258-20d8-4fd5-a7cc-36b4a2a96830"]
+}, Open  ]],
+Cell[9818, 257, 1449, 30, 86, "Input",ExpressionUUID->"70ba00df-3022-483d-b9af-1690e06fde74"],
+Cell[11270, 289, 2181, 54, 124, "Input",ExpressionUUID->"742fff0c-86a5-4aba-95f6-44f4a1fb71b4"],
+Cell[13454, 345, 494, 10, 48, "Input",ExpressionUUID->"5507caf9-5c62-492b-830e-872a7b37c15b"],
+Cell[CellGroupData[{
+Cell[13973, 359, 691, 14, 48, "Input",ExpressionUUID->"58df3417-4779-4f66-8fa9-f02840714a03"],
+Cell[CellGroupData[{
+Cell[14689, 377, 247, 4, 22, "Print",ExpressionUUID->"c9c5fc89-f5a2-4826-aa97-b0fe029f2dc7"],
+Cell[14939, 383, 267, 5, 22, "Print",ExpressionUUID->"41348c9c-4b44-4729-8291-d083f74e8d35"],
+Cell[15209, 390, 267, 5, 22, "Print",ExpressionUUID->"3e2a61b4-bd0e-4b40-8ecb-2093baf8352e"],
+Cell[15479, 397, 279, 5, 22, "Print",ExpressionUUID->"cc8df216-b2d2-422b-b4e4-2b03a819c440"],
+Cell[15761, 404, 287, 5, 22, "Print",ExpressionUUID->"fe19ef2f-cb73-409e-af80-d392eae6f781"],
+Cell[16051, 411, 286, 5, 22, "Print",ExpressionUUID->"e61e38c9-b775-466c-85ee-62f7f1b6b992"],
+Cell[16340, 418, 289, 5, 22, "Print",ExpressionUUID->"f40b0db3-748e-468f-b01e-0cf7ce3b8dae"],
+Cell[16632, 425, 287, 5, 22, "Print",ExpressionUUID->"42505ac2-cfe4-4d0a-8bce-a74fa5010e8d"],
+Cell[16922, 432, 295, 5, 22, "Print",ExpressionUUID->"7d32d2a5-d1b2-476e-a5b3-4429c38ea5e6"],
+Cell[17220, 439, 296, 5, 22, "Print",ExpressionUUID->"3f5472ac-9c18-436b-ae58-0eaa1f60e432"],
+Cell[17519, 446, 295, 5, 22, "Print",ExpressionUUID->"ea8ce914-14d0-4b88-a14c-09af3392a033"],
+Cell[17817, 453, 297, 5, 22, "Print",ExpressionUUID->"42d14c0e-3687-4b46-b8e0-5c90d172bbb0"],
+Cell[18117, 460, 296, 5, 22, "Print",ExpressionUUID->"60740073-406c-4482-8dd7-e18d30ba9b5c"],
+Cell[18416, 467, 303, 5, 22, "Print",ExpressionUUID->"8f8eb8b6-79b0-47c1-94f8-0fad3af5a7bc"],
+Cell[18722, 474, 303, 5, 22, "Print",ExpressionUUID->"22ea275c-bf08-4017-9b65-9914dc8473e3"],
+Cell[19028, 481, 304, 5, 22, "Print",ExpressionUUID->"b39fbf4f-2dc9-4a87-bf17-1fd46393358e"],
+Cell[19335, 488, 303, 5, 22, "Print",ExpressionUUID->"980ec214-ac52-4b2c-b9f4-59d47a6d87d1"],
+Cell[19641, 495, 307, 5, 22, "Print",ExpressionUUID->"12b438a9-8901-46b7-8b91-b63993babd18"],
+Cell[19951, 502, 305, 5, 22, "Print",ExpressionUUID->"338578fb-d6d1-4717-a99a-1aed26dbd449"],
+Cell[20259, 509, 308, 5, 22, "Print",ExpressionUUID->"79c77c6b-a97c-423d-bde1-8f94ac67c523"],
+Cell[20570, 516, 306, 5, 22, "Print",ExpressionUUID->"99320b0b-aa2d-4750-be70-42259c8fd42e"],
+Cell[20879, 523, 306, 5, 22, "Print",ExpressionUUID->"defe9164-b432-4364-95c0-6e8a1b226c4b"],
+Cell[21188, 530, 308, 5, 22, "Print",ExpressionUUID->"3865c356-be3c-425e-9972-c5ce5ece1b65"],
+Cell[21499, 537, 313, 5, 22, "Print",ExpressionUUID->"79615d0d-b451-4001-9065-f7f59045d9b6"],
+Cell[21815, 544, 313, 5, 22, "Print",ExpressionUUID->"15b38546-10c8-4026-be0d-5e37294d7cea"],
+Cell[22131, 551, 315, 5, 22, "Print",ExpressionUUID->"ad618481-5b7a-49ed-8f06-076dd81b4dc2"],
+Cell[22449, 558, 315, 5, 22, "Print",ExpressionUUID->"38a2557b-805e-4a73-b7e9-78c0db7f5398"],
+Cell[22767, 565, 315, 5, 22, "Print",ExpressionUUID->"052b1573-fd44-4b38-a815-6c067b91353a"],
+Cell[23085, 572, 315, 5, 22, "Print",ExpressionUUID->"c6f4f2be-e09f-4798-b6ab-c2fe384e6556"],
+Cell[23403, 579, 313, 5, 22, "Print",ExpressionUUID->"45fcd62f-6e94-4036-a07a-84cbceca35b8"],
+Cell[23719, 586, 314, 5, 22, "Print",ExpressionUUID->"946eac83-2d80-45b9-9cfe-b9fe680cade0"],
+Cell[24036, 593, 314, 5, 22, "Print",ExpressionUUID->"a5c31738-e97b-485b-a26b-0826b3e31cba"],
+Cell[24353, 600, 314, 5, 22, "Print",ExpressionUUID->"7f706882-a466-4b8b-bbb9-ffd0f8f3fa82"],
+Cell[24670, 607, 315, 5, 22, "Print",ExpressionUUID->"0a7a7265-e48b-42a7-8b98-a7b57f6c6ac0"],
+Cell[24988, 614, 315, 5, 22, "Print",ExpressionUUID->"0e144bea-c5cd-4a08-9f3d-7e5f4663a36a"],
+Cell[25306, 621, 314, 5, 22, "Print",ExpressionUUID->"af8f46da-0908-400a-8ef7-f10ebf9f8b41"],
+Cell[25623, 628, 314, 5, 22, "Print",ExpressionUUID->"2a8c171c-37b7-4fe1-887c-9c93c0dedfdc"],
+Cell[25940, 635, 314, 5, 22, "Print",ExpressionUUID->"905a3071-81c5-4fef-a828-00a49c201198"],
+Cell[26257, 642, 315, 5, 22, "Print",ExpressionUUID->"33a9481e-155a-4ef3-9d26-cb2b5f657a8f"],
+Cell[26575, 649, 315, 5, 22, "Print",ExpressionUUID->"8337aaab-a86f-4c60-a916-2cfc8d891e30"],
+Cell[26893, 656, 317, 5, 22, "Print",ExpressionUUID->"fde60be9-d5b8-4472-9858-e6bf09a7f1c2"],
+Cell[27213, 663, 315, 5, 22, "Print",ExpressionUUID->"4403dd8d-6fec-4604-8553-71b2569888e2"],
+Cell[27531, 670, 317, 5, 22, "Print",ExpressionUUID->"009e1641-142d-4329-ad7f-eea372aae157"],
+Cell[27851, 677, 317, 5, 22, "Print",ExpressionUUID->"8f71cdee-1687-44f6-8878-ea5a27ad1647"],
+Cell[28171, 684, 317, 5, 22, "Print",ExpressionUUID->"b974244c-b6f0-4c67-802f-51d6cbabd46b"],
+Cell[28491, 691, 317, 5, 22, "Print",ExpressionUUID->"eb3865f1-d943-4eb2-9765-1c3d3684706d"]
+}, Open  ]]
+}, Open  ]],
+Cell[28835, 700, 1103, 25, 48, "Input",ExpressionUUID->"c00b2a89-cf1b-40db-a6da-f4debd5ea92c"]
+}
+]
+*)
+
