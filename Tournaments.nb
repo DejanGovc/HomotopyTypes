@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    124425,       3305]
-NotebookOptionsPosition[    109110,       3077]
-NotebookOutlinePosition[    109453,       3092]
-CellTagsIndexPosition[    109410,       3089]
+NotebookDataLength[    141002,       3729]
+NotebookOptionsPosition[    121509,       3441]
+NotebookOutlinePosition[    121852,       3456]
+CellTagsIndexPosition[    121809,       3453]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -179,7 +179,7 @@ Cell[BoxData[{
   3.754406490961876*^9, 3.754406494442093*^9}, {3.798387830220957*^9, 
   3.7983878304206142`*^9}, {3.7983878842195535`*^9, 3.798387886460373*^9}},
  CellLabel->
-  "In[114]:=",ExpressionUUID->"12d60047-362c-403f-9d32-8265cc3307d1"],
+  "In[112]:=",ExpressionUUID->"12d60047-362c-403f-9d32-8265cc3307d1"],
 
 Cell[BoxData[
  RowBox[{
@@ -233,7 +233,7 @@ Cell[BoxData[
   3.751395250519681*^9}, {3.751395614907899*^9, 3.7513956202585635`*^9}, {
   3.7513967047315984`*^9, 3.7513967378025417`*^9}},
  CellLabel->
-  "In[116]:=",ExpressionUUID->"6e4fd719-696b-4933-a514-c116af1436bc"],
+  "In[114]:=",ExpressionUUID->"6e4fd719-696b-4933-a514-c116af1436bc"],
 
 Cell[BoxData[
  RowBox[{
@@ -263,7 +263,7 @@ Cell[BoxData[
    3.75140079184966*^9, 3.751400795799583*^9}, {3.7514015361486864`*^9, 
    3.7514015504503083`*^9}, 3.7983882683183036`*^9},
  CellLabel->
-  "In[117]:=",ExpressionUUID->"4a5167fa-13dc-4f16-b46e-5cb970d6b33f"],
+  "In[115]:=",ExpressionUUID->"4a5167fa-13dc-4f16-b46e-5cb970d6b33f"],
 
 Cell[BoxData[
  RowBox[{
@@ -292,7 +292,7 @@ Cell[BoxData[
    3.7513933383876534`*^9}, 3.7513950117270336`*^9, 3.7513967433385825`*^9, {
    3.75140079184966*^9, 3.751400795799583*^9}, 3.7983882740010276`*^9},
  CellLabel->
-  "In[118]:=",ExpressionUUID->"7c9d7b24-23e8-44a7-85ca-d72041858dc0"],
+  "In[116]:=",ExpressionUUID->"7c9d7b24-23e8-44a7-85ca-d72041858dc0"],
 
 Cell[BoxData[
  RowBox[{
@@ -319,7 +319,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.7540559371943226`*^9, 3.7540559723659267`*^9}, 
    3.7983882796429143`*^9},
  CellLabel->
-  "In[119]:=",ExpressionUUID->"ef09524a-4749-460d-b75a-5f14568cc64f"],
+  "In[117]:=",ExpressionUUID->"ef09524a-4749-460d-b75a-5f14568cc64f"],
 
 Cell[BoxData[
  RowBox[{"(*", " ", 
@@ -3032,47 +3032,411 @@ Cell[BoxData[
    RowBox[{"etc", "."}]}], " ", "*)"}]], "Input",
  CellChangeTimes->{{3.7984021305629277`*^9, 3.7984021341279755`*^9}, {
   3.798402450287035*^9, 3.798402484781421*^9}, {3.7984807279127216`*^9, 
-  3.798480738077248*^9}, {3.800097199705413*^9, 
-  3.8000972006418104`*^9}},ExpressionUUID->"fb499428-b4c0-4fba-bc7f-\
+  3.798480738077248*^9}, {3.800097199705413*^9, 3.8000972006418104`*^9}, {
+  3.8009502417118034`*^9, 
+  3.8009502473263264`*^9}},ExpressionUUID->"fb499428-b4c0-4fba-bc7f-\
 a1430b8fdf6c"],
 
 Cell[BoxData[
  RowBox[{"(*", " ", 
-  RowBox[{"Alternatively", ",", " ", 
-   RowBox[{
-   "the", " ", "function", " ", "\"\<popeverything\>\"", " ", "can", " ", 
-    "be", " ", "used", " ", "to", " ", "show", " ", "directly", " ", "that", 
-    " ", "the", " ", "complexes", " ", "are", " ", "wedges", " ", "of", " ", 
-    RowBox[{"spheres", ":"}]}]}], " ", "*)"}]], "Input",
+  RowBox[{
+  "We", " ", "use", " ", "the", " ", "functions", " ", 
+   "\"\<popeverything\>\"", " ", "and", " ", "\"\<coneandcollapse\>\"", " ", 
+   RowBox[{"instead", "."}]}], " ", "*)"}]], "Input",
  CellChangeTimes->{{3.798480740500589*^9, 3.7984807909005947`*^9}, {
-  3.8000972106411047`*^9, 
-  3.8000972294182177`*^9}},ExpressionUUID->"a437331e-d91a-4b31-ac2b-\
+   3.8000972106411047`*^9, 3.8000972294182177`*^9}, 3.800950218483822*^9, {
+   3.800950252734793*^9, 
+   3.800950273809972*^9}},ExpressionUUID->"a437331e-d91a-4b31-ac2b-\
 e83cd445f1d7"],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{
+   "Among", " ", "general", " ", "tournaments", " ", "up", " ", "to", " ", 
+    "7", " ", "vertices"}], ",", " ", 
+   RowBox[{
+    RowBox[{
+    "there", " ", "is", " ", "only", " ", "one", " ", "complex", " ", "which",
+      " ", "cannot", " ", "be", " ", "treated", " ", "by", " ", 
+     "\"\<popeverything\>\""}], ":"}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.800950317349102*^9, 3.800950357535185*^9}, {
+  3.800950489131113*^9, 
+  3.8009504925173364`*^9}},ExpressionUUID->"2d911b3b-be31-44a4-868a-\
+4e536adfade8"],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"Tally", "[", 
-  RowBox[{"popeverything", "/@", 
-   RowBox[{"(", 
-    RowBox[{"Join", "@@", 
-     RowBox[{"(", 
-      RowBox[{"tourn", "/@", 
-       RowBox[{"Range", "[", 
-        RowBox[{"2", ",", "8"}], "]"}]}], ")"}]}], ")"}]}], "]"}]], "Input",
+ RowBox[{
+  RowBox[{"PositionIndex", "[", 
+   RowBox[{"popeverything", "/@", 
+    RowBox[{"(", 
+     RowBox[{"fullflagcplx", "/@", 
+      RowBox[{"(", 
+       RowBox[{"Join", "@@", 
+        RowBox[{"(", 
+         RowBox[{"tourn", "/@", 
+          RowBox[{"Range", "[", 
+           RowBox[{"2", ",", "7"}], "]"}]}], ")"}]}], ")"}]}], ")"}]}], "]"}],
+   "[", "False", "]"}]], "Input",
  CellChangeTimes->{{3.798479632645483*^9, 3.79847966429466*^9}, {
-  3.7984796983628445`*^9, 3.798479741909525*^9}},
+  3.7984796983628445`*^9, 3.798479741909525*^9}, {3.8009500774892936`*^9, 
+  3.800950129568542*^9}},
  CellLabel->
-  "In[384]:=",ExpressionUUID->"b73e8e15-0d3e-4ebe-9b04-f8fbd2158f7b"],
+  "In[121]:=",ExpressionUUID->"b73e8e15-0d3e-4ebe-9b04-f8fbd2158f7b"],
+
+Cell[BoxData[
+ RowBox[{"{", "491", "}"}]], "Output",
+ CellChangeTimes->{{3.8009501205481205`*^9, 3.800950132504871*^9}},
+ CellLabel->
+  "Out[121]=",ExpressionUUID->"4e15773f-5739-4f90-b817-bb150a35d5ec"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"popeverything", "[", 
+  RowBox[{"fullflagcplx", "[", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"Join", "@@", 
+      RowBox[{"(", 
+       RowBox[{"tourn", "/@", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], ")"}]}], ")"}], "[", 
+    RowBox[{"[", "491", "]"}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8009502022288513`*^9, 3.800950205766471*^9}, {
+  3.800950406238391*^9, 3.800950409842197*^9}},
+ CellLabel->
+  "In[128]:=",ExpressionUUID->"b403661f-e8fe-45ad-8f65-aadb5bb8e2ca"],
+
+Cell[BoxData["False"], "Output",
+ CellChangeTimes->{3.8009503277438293`*^9, 3.8009504109682198`*^9},
+ CellLabel->
+  "Out[128]=",ExpressionUUID->"0085dc7c-cf47-491e-b655-6ac4a28f7268"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+  "So", " ", "we", " ", "treat", " ", "it", " ", "using", " ", 
+   "\"\<coneandcollapse\>\"", " ", 
+   RowBox[{"instead", "."}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.8009504139222918`*^9, 
+  3.800950430529993*^9}},ExpressionUUID->"bd1ba9d1-9cdf-48cf-9fb9-\
+0293460957bd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"coneandcollapse", "[", 
+  RowBox[{"fullflagcplx", "[", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"Join", "@@", 
+      RowBox[{"(", 
+       RowBox[{"tourn", "/@", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], ")"}]}], ")"}], "[", 
+    RowBox[{"[", "491", "]"}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.800950167928656*^9, 3.800950199971304*^9}, {
+  3.8009502997302837`*^9, 3.80095031388523*^9}, {3.8009503655702925`*^9, 
+  3.8009503904687862`*^9}},
+ CellLabel->
+  "In[127]:=",ExpressionUUID->"a8725aac-218a-46d5-966c-a438d4544f96"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Found 1 cycle(s) in the top dimension (d = 3) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.800950391241114*^9},
+ CellLabel->
+  "During evaluation of \
+In[127]:=",ExpressionUUID->"bca78413-ddef-42ee-8314-6bb498afc700"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1, 1, 2}.\"\>"], "Print",
+ CellChangeTimes->{3.8009503912613115`*^9},
+ CellLabel->
+  "During evaluation of \
+In[127]:=",ExpressionUUID->"751c04d2-4bd3-4055-b0a8-d45dc1f666c0"],
+
+Cell[BoxData["\<\"Found 2 cycle(s) in the top dimension (d = 2) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.800950391275187*^9},
+ CellLabel->
+  "During evaluation of \
+In[127]:=",ExpressionUUID->"fcb0826d-fd40-48c8-92ea-244427278844"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1, 1}.\"\>"], "Print",
+ CellChangeTimes->{3.8009503912925434`*^9},
+ CellLabel->
+  "During evaluation of \
+In[127]:=",ExpressionUUID->"47adb753-c7cc-433a-ba95-68913d6aa464"],
+
+Cell[BoxData["\<\"Found 1 cycle(s) in the top dimension (d = 1) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.800950391298934*^9},
+ CellLabel->
+  "During evaluation of \
+In[127]:=",ExpressionUUID->"5dff5987-1754-45e0-b294-2a454b0bc354"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1}.\"\>"], "Print",
+ CellChangeTimes->{3.8009503913044024`*^9},
+ CellLabel->
+  "During evaluation of \
+In[127]:=",ExpressionUUID->"7195170f-addc-4857-976d-8ed06d3148d0"],
+
+Cell[BoxData["\<\"The complex is a wedge of spheres.\"\>"], "Print",
+ CellChangeTimes->{3.8009503913079453`*^9},
+ CellLabel->
+  "During evaluation of \
+In[127]:=",ExpressionUUID->"0c0f0b05-06d8-480d-894d-e3759bf71338"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+   RowBox[{
+   "Among", " ", "general", " ", "tournaments", " ", "with", " ", "8", " ", 
+    "vertices"}], ",", " ", 
+   RowBox[{"there", " ", "are", " ", "3", " ", "such", " ", 
+    RowBox[{"examples", ":"}]}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.800950435972794*^9, 
+  3.8009504507899776`*^9}},ExpressionUUID->"320af445-e066-4b00-9053-\
+311748389c0a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PositionIndex", "[", 
+   RowBox[{"popeverything", "/@", 
+    RowBox[{"(", 
+     RowBox[{"fullflagcplx", "/@", 
+      RowBox[{"tourn", "[", "8", "]"}]}], ")"}]}], "]"}], "[", "False", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.8009501483295803`*^9, 3.800950177622445*^9}},
+ CellLabel->
+  "In[123]:=",ExpressionUUID->"74670300-86d7-4e7c-99cc-58f9356082ff"],
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"{", 
-   RowBox[{"True", ",", "7411"}], "}"}], "}"}]], "Output",
- CellChangeTimes->{{3.7984796500179386`*^9, 3.7984796739662933`*^9}, 
-   3.798479738601516*^9, 3.7984799756697264`*^9},
+  RowBox[{"3547", ",", "5210", ",", "6114"}], "}"}]], "Output",
+ CellChangeTimes->{3.8009501749473653`*^9, 3.8009503276897907`*^9},
  CellLabel->
-  "Out[384]=",ExpressionUUID->"b6462e91-225b-40ac-a6de-edcbe0e8cef6"]
+  "Out[123]=",ExpressionUUID->"9058f3e6-cd9f-4bc1-a661-c26cccf710e9"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"Again", ",", " ", 
+   RowBox[{
+    RowBox[{
+    "they", " ", "can", " ", "be", " ", "treated", " ", "using", " ", 
+     "\"\<coneandcollapse\>\""}], ":"}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.8009504671968346`*^9, 
+  3.800950483684535*^9}},ExpressionUUID->"b37dcdfb-37ba-4151-996b-\
+604682bc6739"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"coneandcollapse", "[", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"fullflagcplx", "/@", 
+     RowBox[{"tourn", "[", "8", "]"}]}], ")"}], "[", 
+   RowBox[{"[", "3547", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8009504655505686`*^9, 3.800950466034993*^9}, {
+  3.8009505282338905`*^9, 3.8009505617388334`*^9}},
+ CellLabel->
+  "In[132]:=",ExpressionUUID->"4420204a-1f27-431c-9caa-d676811cf8dd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Found 1 cycle(s) in the top dimension (d = 3) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.800950571208798*^9},
+ CellLabel->
+  "During evaluation of \
+In[132]:=",ExpressionUUID->"a4c72642-8212-41ab-922e-c03231ddd8a3"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1, 1, 2}.\"\>"], "Print",
+ CellChangeTimes->{3.8009505712266073`*^9},
+ CellLabel->
+  "During evaluation of \
+In[132]:=",ExpressionUUID->"8212d13e-164d-4ca2-9f14-a43f46e91af0"],
+
+Cell[BoxData["\<\"Found 2 cycle(s) in the top dimension (d = 2) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.8009505712434716`*^9},
+ CellLabel->
+  "During evaluation of \
+In[132]:=",ExpressionUUID->"ef147346-9ec8-402a-8dcc-c99339e3f7af"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1, 1}.\"\>"], "Print",
+ CellChangeTimes->{3.800950571247896*^9},
+ CellLabel->
+  "During evaluation of \
+In[132]:=",ExpressionUUID->"c393ef65-881d-4c88-940e-68bc05516222"],
+
+Cell[BoxData["\<\"Found 1 cycle(s) in the top dimension (d = 1) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.8009505712524033`*^9},
+ CellLabel->
+  "During evaluation of \
+In[132]:=",ExpressionUUID->"490ac8b7-693d-49e4-8fa7-f74cf9c2d1ff"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1}.\"\>"], "Print",
+ CellChangeTimes->{3.8009505712575703`*^9},
+ CellLabel->
+  "During evaluation of \
+In[132]:=",ExpressionUUID->"6e51c7c2-63e9-44ed-9f2f-56b7799e802a"],
+
+Cell[BoxData["\<\"The complex is a wedge of spheres.\"\>"], "Print",
+ CellChangeTimes->{3.800950571261733*^9},
+ CellLabel->
+  "During evaluation of \
+In[132]:=",ExpressionUUID->"c406cd18-ac0f-49fc-a001-3b361b12299a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"coneandcollapse", "[", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"fullflagcplx", "/@", 
+     RowBox[{"tourn", "[", "8", "]"}]}], ")"}], "[", 
+   RowBox[{"[", "5210", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8009505476134405`*^9, 3.800950565638484*^9}},
+ CellLabel->
+  "In[133]:=",ExpressionUUID->"e562000c-f81d-46eb-8773-461d1eb0a723"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Found 1 cycle(s) in the top dimension (d = 3) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.8009505728284483`*^9},
+ CellLabel->
+  "During evaluation of \
+In[133]:=",ExpressionUUID->"9296e27c-0305-4052-adba-249c072f73a2"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1, 1, 2}.\"\>"], "Print",
+ CellChangeTimes->{3.800950572887892*^9},
+ CellLabel->
+  "During evaluation of \
+In[133]:=",ExpressionUUID->"dd40eb2f-a9e1-4aec-a324-e4f344f86819"],
+
+Cell[BoxData["\<\"Found 2 cycle(s) in the top dimension (d = 2) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.800950572896983*^9},
+ CellLabel->
+  "During evaluation of \
+In[133]:=",ExpressionUUID->"bdebe2d6-3757-402e-a5f4-f385a004df3c"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1, 1}.\"\>"], "Print",
+ CellChangeTimes->{3.800950572899996*^9},
+ CellLabel->
+  "During evaluation of \
+In[133]:=",ExpressionUUID->"12fc16c2-62c3-4c8f-9089-bbeea1ed378a"],
+
+Cell[BoxData["\<\"Found 1 cycle(s) in the top dimension (d = 1) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.800950572904871*^9},
+ CellLabel->
+  "During evaluation of \
+In[133]:=",ExpressionUUID->"3737ba71-382a-42c3-95d6-9875a0634730"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1}.\"\>"], "Print",
+ CellChangeTimes->{3.800950572908306*^9},
+ CellLabel->
+  "During evaluation of \
+In[133]:=",ExpressionUUID->"6babce4e-1dc7-4db7-9e23-66b99d601202"],
+
+Cell[BoxData["\<\"The complex is a wedge of spheres.\"\>"], "Print",
+ CellChangeTimes->{3.8009505729118423`*^9},
+ CellLabel->
+  "During evaluation of \
+In[133]:=",ExpressionUUID->"5395fd70-5acb-485d-99c6-6ae688234fa2"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"coneandcollapse", "[", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"fullflagcplx", "/@", 
+     RowBox[{"tourn", "[", "8", "]"}]}], ")"}], "[", 
+   RowBox[{"[", "6114", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8009505542933826`*^9, 3.800950569411239*^9}},
+ CellLabel->
+  "In[134]:=",ExpressionUUID->"21963ed0-b44c-4744-9210-2f14057c9db5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Found 1 cycle(s) in the top dimension (d = 3) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.8009505743488665`*^9},
+ CellLabel->
+  "During evaluation of \
+In[134]:=",ExpressionUUID->"8fb80214-fcd2-4219-a09f-c51f1a4318a0"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1, 1, 2}.\"\>"], "Print",
+ CellChangeTimes->{3.800950574364944*^9},
+ CellLabel->
+  "During evaluation of \
+In[134]:=",ExpressionUUID->"794e97ef-ad1f-4b1c-a5ce-a5dba1ec2605"],
+
+Cell[BoxData["\<\"Found 2 cycle(s) in the top dimension (d = 2) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.8009505743722377`*^9},
+ CellLabel->
+  "During evaluation of \
+In[134]:=",ExpressionUUID->"7358bfa4-df52-4b1d-a423-ced05bdb81f8"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1, 1}.\"\>"], "Print",
+ CellChangeTimes->{3.8009505743829465`*^9},
+ CellLabel->
+  "During evaluation of \
+In[134]:=",ExpressionUUID->"339bfd2a-007b-4270-b922-e3b1d1ff6212"],
+
+Cell[BoxData["\<\"Found 1 cycle(s) in the top dimension (d = 1) that can be \
+coned off.\"\>"], "Print",
+ CellChangeTimes->{3.800950574395042*^9},
+ CellLabel->
+  "During evaluation of \
+In[134]:=",ExpressionUUID->"59ced5c1-bd40-4178-9836-39def7e5d0fa"],
+
+Cell[BoxData["\<\"The Betti numbers (computed numerically) after the coning \
+operation are: {1}.\"\>"], "Print",
+ CellChangeTimes->{3.8009505743997355`*^9},
+ CellLabel->
+  "During evaluation of \
+In[134]:=",ExpressionUUID->"ad1ca4b1-64e4-49fb-b3c4-2edbcae1103d"],
+
+Cell[BoxData["\<\"The complex is a wedge of spheres.\"\>"], "Print",
+ CellChangeTimes->{3.8009505744037275`*^9},
+ CellLabel->
+  "During evaluation of \
+In[134]:=",ExpressionUUID->"292cc2f8-66a4-4526-b4e3-039d091cbc65"]
+}, Open  ]]
 }, Open  ]]
 },
 WindowSize->{1064, 657},
@@ -3301,11 +3665,71 @@ Cell[CellGroupData[{
 Cell[104807, 2969, 415, 11, 28, "Input",ExpressionUUID->"9c5dd327-34c5-42ab-8198-5b90e2430e41"],
 Cell[105225, 2982, 1940, 39, 385, "Output",ExpressionUUID->"caf933c7-1329-47b8-b5c8-d41de2f416d7"]
 }, Open  ]],
-Cell[107180, 3024, 554, 12, 28, "Input",ExpressionUUID->"fb499428-b4c0-4fba-bc7f-a1430b8fdf6c"],
-Cell[107737, 3038, 553, 11, 28, "Input",ExpressionUUID->"a437331e-d91a-4b31-ac2b-e83cd445f1d7"],
+Cell[107180, 3024, 607, 13, 28, "Input",ExpressionUUID->"fb499428-b4c0-4fba-bc7f-a1430b8fdf6c"],
+Cell[107790, 3039, 488, 10, 28, "Input",ExpressionUUID->"a437331e-d91a-4b31-ac2b-e83cd445f1d7"],
+Cell[108281, 3051, 582, 14, 48, "Input",ExpressionUUID->"2d911b3b-be31-44a4-868a-4e536adfade8"],
 Cell[CellGroupData[{
-Cell[108315, 3053, 470, 12, 28, "Input",ExpressionUUID->"b73e8e15-0d3e-4ebe-9b04-f8fbd2158f7b"],
-Cell[108788, 3067, 306, 7, 32, "Output",ExpressionUUID->"b6462e91-225b-40ac-a6de-edcbe0e8cef6"]
+Cell[108888, 3069, 646, 17, 28, "Input",ExpressionUUID->"b73e8e15-0d3e-4ebe-9b04-f8fbd2158f7b"],
+Cell[109537, 3088, 203, 4, 32, "Output",ExpressionUUID->"4e15773f-5739-4f90-b817-bb150a35d5ec"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[109777, 3097, 544, 14, 28, "Input",ExpressionUUID->"b403661f-e8fe-45ad-8f65-aadb5bb8e2ca"],
+Cell[110324, 3113, 183, 3, 32, "Output",ExpressionUUID->"0085dc7c-cf47-491e-b655-6ac4a28f7268"]
+}, Open  ]],
+Cell[110522, 3119, 327, 8, 28, "Input",ExpressionUUID->"bd1ba9d1-9cdf-48cf-9fb9-0293460957bd"],
+Cell[CellGroupData[{
+Cell[110874, 3131, 598, 15, 28, "Input",ExpressionUUID->"a8725aac-218a-46d5-966c-a438d4544f96"],
+Cell[CellGroupData[{
+Cell[111497, 3150, 252, 5, 22, "Print",ExpressionUUID->"bca78413-ddef-42ee-8314-6bb498afc700"],
+Cell[111752, 3157, 269, 5, 22, "Print",ExpressionUUID->"751c04d2-4bd3-4055-b0a8-d45dc1f666c0"],
+Cell[112024, 3164, 252, 5, 22, "Print",ExpressionUUID->"fcb0826d-fd40-48c8-92ea-244427278844"],
+Cell[112279, 3171, 266, 5, 22, "Print",ExpressionUUID->"47adb753-c7cc-433a-ba95-68913d6aa464"],
+Cell[112548, 3178, 252, 5, 22, "Print",ExpressionUUID->"5dff5987-1754-45e0-b294-2a454b0bc354"],
+Cell[112803, 3185, 263, 5, 22, "Print",ExpressionUUID->"7195170f-addc-4857-976d-8ed06d3148d0"],
+Cell[113069, 3192, 218, 4, 22, "Print",ExpressionUUID->"0c0f0b05-06d8-480d-894d-e3759bf71338"]
+}, Open  ]]
+}, Open  ]],
+Cell[113314, 3200, 410, 10, 28, "Input",ExpressionUUID->"320af445-e066-4b00-9053-311748389c0a"],
+Cell[CellGroupData[{
+Cell[113749, 3214, 388, 10, 28, "Input",ExpressionUUID->"74670300-86d7-4e7c-99cc-58f9356082ff"],
+Cell[114140, 3226, 243, 5, 32, "Output",ExpressionUUID->"9058f3e6-cd9f-4bc1-a661-c26cccf710e9"]
+}, Open  ]],
+Cell[114398, 3234, 354, 9, 28, "Input",ExpressionUUID->"b37dcdfb-37ba-4151-996b-604682bc6739"],
+Cell[CellGroupData[{
+Cell[114777, 3247, 423, 10, 28, "Input",ExpressionUUID->"4420204a-1f27-431c-9caa-d676811cf8dd"],
+Cell[CellGroupData[{
+Cell[115225, 3261, 252, 5, 22, "Print",ExpressionUUID->"a4c72642-8212-41ab-922e-c03231ddd8a3"],
+Cell[115480, 3268, 269, 5, 22, "Print",ExpressionUUID->"8212d13e-164d-4ca2-9f14-a43f46e91af0"],
+Cell[115752, 3275, 254, 5, 22, "Print",ExpressionUUID->"ef147346-9ec8-402a-8dcc-c99339e3f7af"],
+Cell[116009, 3282, 264, 5, 22, "Print",ExpressionUUID->"c393ef65-881d-4c88-940e-68bc05516222"],
+Cell[116276, 3289, 254, 5, 22, "Print",ExpressionUUID->"490ac8b7-693d-49e4-8fa7-f74cf9c2d1ff"],
+Cell[116533, 3296, 263, 5, 22, "Print",ExpressionUUID->"6e51c7c2-63e9-44ed-9f2f-56b7799e802a"],
+Cell[116799, 3303, 216, 4, 22, "Print",ExpressionUUID->"c406cd18-ac0f-49fc-a001-3b361b12299a"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[117064, 3313, 370, 9, 28, "Input",ExpressionUUID->"e562000c-f81d-46eb-8773-461d1eb0a723"],
+Cell[CellGroupData[{
+Cell[117459, 3326, 254, 5, 22, "Print",ExpressionUUID->"9296e27c-0305-4052-adba-249c072f73a2"],
+Cell[117716, 3333, 267, 5, 22, "Print",ExpressionUUID->"dd40eb2f-a9e1-4aec-a324-e4f344f86819"],
+Cell[117986, 3340, 252, 5, 22, "Print",ExpressionUUID->"bdebe2d6-3757-402e-a5f4-f385a004df3c"],
+Cell[118241, 3347, 264, 5, 22, "Print",ExpressionUUID->"12fc16c2-62c3-4c8f-9089-bbeea1ed378a"],
+Cell[118508, 3354, 252, 5, 22, "Print",ExpressionUUID->"3737ba71-382a-42c3-95d6-9875a0634730"],
+Cell[118763, 3361, 261, 5, 22, "Print",ExpressionUUID->"6babce4e-1dc7-4db7-9e23-66b99d601202"],
+Cell[119027, 3368, 218, 4, 22, "Print",ExpressionUUID->"5395fd70-5acb-485d-99c6-6ae688234fa2"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[119294, 3378, 370, 9, 28, "Input",ExpressionUUID->"21963ed0-b44c-4744-9210-2f14057c9db5"],
+Cell[CellGroupData[{
+Cell[119689, 3391, 254, 5, 22, "Print",ExpressionUUID->"8fb80214-fcd2-4219-a09f-c51f1a4318a0"],
+Cell[119946, 3398, 267, 5, 22, "Print",ExpressionUUID->"794e97ef-ad1f-4b1c-a5ce-a5dba1ec2605"],
+Cell[120216, 3405, 254, 5, 22, "Print",ExpressionUUID->"7358bfa4-df52-4b1d-a423-ced05bdb81f8"],
+Cell[120473, 3412, 266, 5, 22, "Print",ExpressionUUID->"339bfd2a-007b-4270-b922-e3b1d1ff6212"],
+Cell[120742, 3419, 252, 5, 22, "Print",ExpressionUUID->"59ced5c1-bd40-4178-9836-39def7e5d0fa"],
+Cell[120997, 3426, 263, 5, 22, "Print",ExpressionUUID->"ad1ca4b1-64e4-49fb-b3c4-2edbcae1103d"],
+Cell[121263, 3433, 218, 4, 22, "Print",ExpressionUUID->"292cc2f8-66a4-4526-b4e3-039d091cbc65"]
+}, Open  ]]
 }, Open  ]]
 }
 ]
